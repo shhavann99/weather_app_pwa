@@ -1,0 +1,156 @@
+:root {
+    --primary-bg: #343434;
+    --card-bg: #3a3a3a;
+    --text-color: #ffffff;
+    --shadow-dark: #191b1b;
+    --shadow-light: #595959;
+    --accent-color: #4a90e2;
+    --border-radius: 20px;
+    --transition: all 0.3s ease;
+  }
+  
+  
+  body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+    color: var(--text-color);
+    background-color: var(--primary-bg);
+    background-image: radial-gradient(circle at 50% 50%, #434343 0%, #343434 100%);
+  }
+  
+  /* Container Styles */
+  .container {
+    width: 90%;
+    max-width: 350px;
+    padding: 20px;
+  }
+  
+  /* Card Styles */
+  .card {
+    border-radius: var(--border-radius);
+    background-color: var(--card-bg);
+    box-shadow: 8px 8px 15px var(--shadow-dark), 
+                -8px -8px 15px var(--shadow-light);
+    padding: 25px;
+    text-align: center;
+    color: var(--text-color);
+    transition: var(--transition);
+  }
+  
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 10px 10px 20px var(--shadow-dark), 
+               -10px -10px 20px var(--shadow-light);
+  }
+  
+  /* Location Styles */
+  .location {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 5px;
+    font-weight: 500;
+    font-size: 1.5rem;
+  }
+  
+  /* Weather Condition Styles */
+  .weather-condition {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    text-transform: capitalize;
+    color: rgba(255, 255, 255, 0.8);
+  }
+  
+
+  .temperature {
+    font-size: 4.5rem;
+    font-weight: 300;
+    margin: 20px 0;
+    position: relative;
+  }
+  
+  .temperature sup {
+    font-size: 2rem;
+    position: absolute;
+    top: 10px;
+  }
+  
+
+  .weather-icon {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 20px;
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.3));
+  }
+  
+  /* Refresh Button Styles */
+  .refresh-btn {
+    width: 60px;
+    height: 60px;
+    margin: 20px auto 0;
+    background-color: transparent;
+    border: 0;
+    color: var(--accent-color);
+    font-size: 1.5rem;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: 5px 5px 10px var(--shadow-dark), 
+               -5px -5px 10px var(--shadow-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .refresh-btn:hover {
+    color: #fff;
+    background-color: var(--accent-color);
+    box-shadow: inset 3px 3px 5px rgba(0, 0, 0, 0.2),
+                inset -3px -3px 5px rgba(255, 255, 255, 0.1);
+  }
+  
+  .refresh-btn:active {
+    transform: scale(0.95);
+  }
+  
+  /* Additional Info Styles */
+  .additional-info {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .info-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .info-item span:first-child {
+    font-size: 0.9rem;
+    opacity: 0.7;
+    margin-bottom: 5px;
+  }
+  
+  .info-item span:last-child {
+    font-weight: 500;
+  }
+  
+  /* Responsive Styles */
+  @media (max-width: 480px) {
+    .container {
+      width: 95%;
+    }
+    
+    .temperature {
+      font-size: 3.5rem;
+    }
+  }

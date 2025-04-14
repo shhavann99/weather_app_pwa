@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#4285f4">
+    <!-- iOS meta tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Weather App">
+    <!-- PWA manifest -->
+    <link rel="manifest" href="./manifest.json">
+    <!-- Preconnect to external domains -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <!-- External resources -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="app.css">
+    <title>Weather App</title>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="location">
+                <ion-icon name="location"></ion-icon>
+                <span id="location">Loading...</span>
+            </div>
+            <div class="weather-condition" id="weather">--</div>
+            <div class="temperature">
+                <span id="temp">--</span><sup>°C</sup>
+            </div>
+            <img class="weather-icon" src="" id="icon" alt="Weather icon">
+            
+            <div class="additional-info">
+                <div class="info-item">
+                    <span>Humidity</span>
+                    <span id="humidity">--%</span>
+                </div>
+                <div class="info-item">
+                    <span>Wind</span>
+                    <span id="wind">-- km/h</span>
+                </div>
+                <div class="info-item">
+                    <span>Pressure</span>
+                    <span id="pressure">-- hPa</span>
+                </div>
+            </div>
+            
+            <button class="refresh-btn" onclick="window.location.reload()">
+                <ion-icon name="refresh"></ion-icon>
+            </button>
+        </div>
+    </div>
+
+    <!-- Ionicons -->
+    <script src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+    <!-- Main application script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const link = "https://api.openweathermap.org/data/2.5/weather?q=mumbai&appid=70fd40cb7caff953cc3585b0177086dd";
+            
+            fetch(link)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Weather data not available');
+                    }
+                    return response.json();
+                })
+                .then(obj => {
+                    console.log(obj);
+                    document.getElementById('weather').textContent = obj.weather[0].description;
+                    document.getElementById('location').textContent = obj.name;
+                    document.getElementById('temp').textContent = Math.round(obj.main.temp - 273.15);
+                    document.getElementById('humidity').textContent = obj.main.humidity + '%';
+                    document.getElementById('wind').textContent = Math.round(obj.wind.speed * 3.6) + ' km/h';
+                    document.getElementById('pressure').textContent = obj.main.pressure + ' hPa';
+                    
+                    const icon = document.getElementById('icon');
+                    icon.src = "https://openweathermap.org/img/w/" + obj.weather[0].icon + ".png";
+                    icon.alt = obj.weather[0].main + " icon";
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('weather').textContent = "Weather data unavailable";
+                });
+        });
+
+        // Register Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then((registration) => {
+                        console.log('ServiceWorker registration successful with scope:', registration.scope);
+                    })
+                    .catch((error) => {
+                        console.log('ServiceWorker registration failed:', error);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>
